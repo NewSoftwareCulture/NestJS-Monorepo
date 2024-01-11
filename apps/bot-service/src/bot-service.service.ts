@@ -1,10 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { Context, Telegraf } from 'telegraf';
 import { ConfigService } from '@libs/config';
+import { LoggerService } from '@libs/logger';
 
 @Injectable()
 export class BotService {
-  constructor(private readonly configService: ConfigService) {}
+  constructor(
+    private readonly configService: ConfigService,
+    private readonly logger: LoggerService,
+  ) {}
 
   private bot: Telegraf;
 
