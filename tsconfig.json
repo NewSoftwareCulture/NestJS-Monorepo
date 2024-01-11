@@ -41,6 +41,18 @@
       ],
       "@libs/logger/*": [
         "libs/logger/src/*"
+      ],
+      "@libs/guards": [
+        "libs/guards"
+      ],
+      "@libs/guards/*": [
+        "libs/guards/*"
+      ],
+      "@libs/transport-telegram": [
+        "libs/transport-telegram/src"
+      ],
+      "@libs/transport-telegram/*": [
+        "libs/transport-telegram/src/*"
       ]
     }
   }

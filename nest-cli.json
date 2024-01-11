@@ -63,6 +63,24 @@
       "compilerOptions": {
         "tsConfigPath": "libs/logger/tsconfig.lib.json"
       }
+    },
+    "@libs/guards": {
+      "type": "library",
+      "root": "libs/guards",
+      "entryFile": "index",
+      "sourceRoot": "libs/guards",
+      "compilerOptions": {
+        "tsConfigPath": "libs/guards/tsconfig.lib.json"
+      }
+    },
+    "@libs/transport-telegram": {
+      "type": "library",
+      "root": "libs/transport-telegram",
+      "entryFile": "index",
+      "sourceRoot": "libs/transport-telegram/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/transport-telegram/tsconfig.lib.json"
+      }
     }
   }
 }
