@@ -1,6 +1,8 @@
 import { CustomTransportStrategy, Server } from '@nestjs/microservices';
 import { Context, Telegraf } from 'telegraf';
 
+import { BotConfig } from '@libs/config/dto/bot.dto';
+
 import { EventHandler, events } from './telegram-transport.dto';
 import { TelegramBot } from './telegram-bot';
 
@@ -11,15 +13,15 @@ export class TelegramTransportStrategy
   private bot: Telegraf;
   private log: any;
 
-  constructor(token: string, log: any) {
+  constructor(bot: BotConfig, log: any) {
     super();
 
-    this.createBot(token);
+    this.createBot(bot);
     this.createLogger(log);
   }
 
-  private createBot(token: string) {
-    this.bot = TelegramBot.create(token).getClient();
+  private createBot(bot: BotConfig) {
+    this.bot = TelegramBot.create(bot).getClient();
 
     this.bot.catch(this.errorCatcher);
   }

@@ -1,19 +1,27 @@
 import { Controller, Get, Query, UseGuards } from '@nestjs/common';
-import { BotService } from './bot-service.service';
-import { delay } from '@libs/utils';
-import { LoggerService } from '@libs/logger';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { Context, Input } from 'telegraf';
-import { TelegramAdminGuard } from '@libs/guards';
 
-const adminIds = [];
+import { LoggerService } from '@libs/logger';
+import { ConfigService } from '@libs/config';
+import { TelegramAdminGuard } from '@libs/guards';
+import { delay, findByName } from '@libs/utils';
+
+import { BotService } from './bot-service.service';
+
+const adminIds: number[] = [];
 
 @Controller()
 export class BotController {
   constructor(
     private readonly botService: BotService,
+    private readonly configService: ConfigService,
     private readonly logger: LoggerService,
-  ) {}
+  ) {
+    adminIds.push(
+      ...findByName(this.configService.get('bot'), 'bot-service').admin,
+    );
+  }
 
   @MessagePattern({ event: 'sticker' })
   @UseGuards(new TelegramAdminGuard(adminIds))
@@ -27,6 +35,37 @@ export class BotController {
     return ctx.reply('Its text "hello"!');
   }
 
+  @MessagePattern({ event: 'command', value: 'info' })
+  @UseGuards(new TelegramAdminGuard(adminIds))
+  info(@Payload() ctx: Context) {
+    const {
+      id: userId,
+      first_name: firstName,
+      last_name: lastName,
+      username,
+      language_code: lang,
+    } = ctx.from || {};
+    const { id: chatId, type: chatType } = ctx.chat || {};
+
+    const msg = `
+ℹ️ <b>Info:</b>
+
+-------- User --------
+
+Id: ${userId}
+Username: ${username}
+
+Name: ${firstName || ''} ${lastName || ''}
+Lang: ${lang}
+
+------- Chat --------
+
+Id: ${chatId}
+Type: ${chatType}
+`;
+    return ctx.replyWithHTML(msg);
+  }
+
   @MessagePattern({ event: 'command', value: 'help' })
   @UseGuards(new TelegramAdminGuard(adminIds))
   command(@Payload() ctx: Context) {
@@ -37,6 +76,14 @@ export class BotController {
   @UseGuards(new TelegramAdminGuard(adminIds))
   video(@Payload() ctx: Context) {
     return ctx.reply('Its video!');
+  }
+
+  @MessagePattern({ event: 'document' })
+  @UseGuards(new TelegramAdminGuard(adminIds))
+  document(@Payload() ctx: Context) {
+    console.log(ctx);
+    console.log(ctx.update);
+    return ctx.reply('Its document!');
   }
 
   @MessagePattern({ event: 'photo' })

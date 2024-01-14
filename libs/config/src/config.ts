@@ -3,7 +3,7 @@ import { readFileSync } from 'fs';
 
 import { fileExistsSync } from 'libs/utils';
 
-import { ConfigDto } from './config.dto';
+import { ConfigDto } from './dto/config.dto';
 import { CONFIG_FILE_PATH } from './constants';
 import { validateConfig } from './helpers/validateConfig';
 

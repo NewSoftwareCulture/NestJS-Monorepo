@@ -3,6 +3,7 @@ import { MicroserviceOptions } from '@nestjs/microservices';
 import { TelegramTransportStrategy } from '@libs/transport-telegram';
 import { LoggerService, LoggerModule } from '@libs/logger';
 import { ConfigService } from '@libs/config';
+import { findByName } from '@libs/utils';
 
 import { BotModule } from './bot-service.module';
 
@@ -17,13 +18,16 @@ async function bootstrap() {
 
   const configService = app.get(ConfigService);
   const port = configService.get('port');
-  const token = configService.get('bot_token');
+  const bots = configService.get('bot');
   const logConfig = configService.get('logger');
 
   const logger = LoggerModule.createLogger(logConfig);
 
   app.connectMicroservice<MicroserviceOptions>({
-    strategy: new TelegramTransportStrategy(token, logger),
+    strategy: new TelegramTransportStrategy(
+      findByName(bots, 'bot-service'),
+      logger,
+    ),
   });
 
   // Add Winston logger

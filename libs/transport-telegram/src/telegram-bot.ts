@@ -1,25 +1,39 @@
 import { Telegraf } from 'telegraf';
 
-export class TelegramBot {
-  private static instance: TelegramBot;
-  private client: Telegraf;
+import { BotConfig } from '@libs/config/dto/bot.dto';
 
-  constructor(token: string) {
-    this.client = new Telegraf(token);
+type Instance = {
+  [key: string]: TelegramBot;
+};
+
+export class TelegramBot {
+  private static instance: Instance = {};
+  private client: Telegraf;
+  private config: BotConfig;
+
+  constructor(config: BotConfig) {
+    this.client = new Telegraf(config.token);
+    this.config = config;
   }
 
   getClient() {
     return this.client;
   }
 
-  static getInstance() {
-    return this.instance.client;
+  static getInstance(name: string) {
+    return this.instance[name].client;
   }
 
-  static create(token: string) {
-    if (!this.instance) {
-      this.instance = new TelegramBot(token);
-    }
+  static getInstances() {
     return this.instance;
+  }
+
+  static create(config: BotConfig) {
+    const { name } = config;
+
+    if (!this.instance[name]) {
+      this.instance[name] = new TelegramBot(config);
+    }
+    return this.instance[name];
   }
 }
