@@ -28,6 +28,24 @@
         "tsConfigPath": "apps/file-service/tsconfig.app.json"
       }
     },
+    "model-service": {
+      "type": "application",
+      "root": "apps/model-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/model-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/model-service/tsconfig.app.json"
+      }
+    },
+    "healthcheck-service": {
+      "type": "application",
+      "root": "apps/healthcheck-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/healthcheck-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/healthcheck-service/tsconfig.app.json"
+      }
+    },
     "@libs/config": {
       "type": "library",
       "root": "libs/config",
@@ -80,6 +98,24 @@
       "sourceRoot": "libs/transport-telegram/src",
       "compilerOptions": {
         "tsConfigPath": "libs/transport-telegram/tsconfig.lib.json"
+      }
+    },
+    "@libs/healthcheck": {
+      "type": "library",
+      "root": "libs/healthcheck",
+      "entryFile": "index",
+      "sourceRoot": "libs/healthcheck",
+      "compilerOptions": {
+        "tsConfigPath": "libs/healthcheck/tsconfig.lib.json"
+      }
+    },
+    "@libs/middleware": {
+      "type": "library",
+      "root": "libs/middleware",
+      "entryFile": "index",
+      "sourceRoot": "libs/middleware",
+      "compilerOptions": {
+        "tsConfigPath": "libs/middleware/tsconfig.lib.json"
       }
     }
   }

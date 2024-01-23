@@ -8,14 +8,20 @@
   "scripts": {
     "build:bot-service": "nest build bot-service",
     "build:file-service": "nest build file-service",
-    "build": "npm run build:bot-service && npm run build:file-service",
+    "build:model-service": "nest build model-service",
+    "build:healthcheck-service": "nest build healthcheck-service",
+    "build": "npm run build:bot-service && npm run build:file-service && npm run build:model-service && npm run build:healthcheck-service",
     "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
     "start": "nest start",
     "start:debug": "nest start bot-service --debug --watch",
     "dev:bot-service": "nest start bot-service --debug --watch",
     "dev:file-service": "nest start file-service --debug --watch",
+    "dev:model-service": "nest start model-service --debug --watch",
+    "dev:healthcheck-service": "nest start healthcheck-service --debug --watch",
     "start:bot-service": "node dist/apps/bot-service/main",
     "start:file-service": "node dist/apps/file-service/main",
+    "start:model-service": "node dist/apps/model-service/main",
+    "start:healthcheck-service": "node dist/apps/healthcheck-service/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -24,11 +30,14 @@
     "test:e2e": "jest --config ./apps/bot-service/test/jest-e2e.json"
   },
   "dependencies": {
+    "@nestjs/axios": "^3.0.1",
     "@nestjs/common": "^10.0.0",
     "@nestjs/config": "^3.1.1",
     "@nestjs/core": "^10.0.0",
     "@nestjs/microservices": "^10.3.0",
     "@nestjs/platform-express": "^10.0.0",
+    "@nestjs/schedule": "^4.0.0",
+    "axios": "^1.6.5",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
     "reflect-metadata": "^0.1.13",
@@ -42,6 +51,7 @@
     "@nestjs/testing": "^10.0.0",
     "@types/express": "^4.17.17",
     "@types/jest": "^29.5.2",
+    "@types/multer": "^1.4.11",
     "@types/node": "^20.3.1",
     "@types/supertest": "^2.0.12",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
@@ -85,7 +95,9 @@
       "^@libs/utils(|/.*)$": "<rootDir>/libs/utils/$1",
       "^@libs/logger(|/.*)$": "<rootDir>/libs/logger/src/$1",
       "^@libs/guards(|/.*)$": "<rootDir>/libs/guards/$1",
-      "^@libs/transport-telegram(|/.*)$": "<rootDir>/libs/transport-telegram/src/$1"
+      "^@libs/transport-telegram(|/.*)$": "<rootDir>/libs/transport-telegram/src/$1",
+      "^@libs/healthcheck(|/.*)$": "<rootDir>/libs/healthcheck/$1",
+      "^@libs/middleware(|/.*)$": "<rootDir>/libs/middleware/$1"
     }
   }
 }

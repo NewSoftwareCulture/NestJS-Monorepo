@@ -53,6 +53,18 @@
       ],
       "@libs/transport-telegram/*": [
         "libs/transport-telegram/src/*"
+      ],
+      "@libs/healthcheck": [
+        "libs/healthcheck/"
+      ],
+      "@libs/healthcheck/*": [
+        "libs/healthcheck/*"
+      ],
+      "@libs/middleware": [
+        "libs/middleware/"
+      ],
+      "@libs/middleware/*": [
+        "libs/middleware/*"
       ]
     }
   }
