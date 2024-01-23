@@ -4,3 +4,5 @@ export const CONFIG_FILE_PATH = {
   develop: '../../../config.dev.json',
   production: '../../../config.prod.json',
 };
+
+export const CONFIG_SERVICE_DI = Symbol('CONFIG_SERVICE_DI');
