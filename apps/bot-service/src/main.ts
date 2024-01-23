@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions } from '@nestjs/microservices';
 import { TelegramTransportStrategy } from '@libs/transport-telegram';
-import { LoggerService, LoggerModule } from '@libs/logger';
+import { LoggerService } from '@libs/logger';
 import { ConfigService } from '@libs/config';
 import { findByName } from '@libs/utils';
 
@@ -19,9 +19,8 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
   const port = configService.get('port');
   const bots = configService.get('bot');
-  const logConfig = configService.get('logger');
 
-  const logger = LoggerModule.createLogger(logConfig);
+  const logger = new LoggerService(configService);
 
   app.connectMicroservice<MicroserviceOptions>({
     strategy: new TelegramTransportStrategy(
@@ -31,7 +30,7 @@ async function bootstrap() {
   });
 
   // Add Winston logger
-  app.useLogger(new LoggerService(logger));
+  app.useLogger(logger);
 
   // Add route prefix
   app.setGlobalPrefix('api/v1');
