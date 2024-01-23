@@ -1,11 +1,18 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { LoggerService as NestLoggerService } from '@nestjs/common';
-import { LOGGER_CLIENT } from './constants';
-import * as winston from 'winston';
+import { Injectable, LoggerService as NestLoggerService } from '@nestjs/common';
+import { Logger } from 'winston';
+
+import { ConfigService } from '@libs/config';
+
+import { createLogger } from './logger';
 
 @Injectable()
 export class LoggerService implements NestLoggerService {
-  constructor(@Inject(LOGGER_CLIENT) private readonly logger: winston.Logger) {}
+  private logger: Logger;
+
+  constructor(private readonly configService: ConfigService) {
+    const config = configService.get('logger');
+    this.logger = createLogger(config);
+  }
 
   log(message: any, ...optionalParams: any[]) {
     return this.logger.info(message, ...optionalParams);

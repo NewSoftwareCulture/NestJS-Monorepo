@@ -1,1 +1,1 @@
-export const LOGGER_CLIENT = Symbol('LOGGER_CLIENT');
+export const LOGGER_SERVICE_DI = Symbol('LOGGER_SERVICE_DI');
