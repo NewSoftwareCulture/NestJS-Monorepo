@@ -1,6 +1,6 @@
 import { Telegraf } from 'telegraf';
 
-import { BotConfig } from '@libs/config/dto/bot.dto';
+import { BotDto } from '@libs/config/dto/bot.dto';
 
 type Instance = {
   [key: string]: TelegramBot;
@@ -9,10 +9,14 @@ type Instance = {
 export class TelegramBot {
   private static instance: Instance = {};
   private client: Telegraf;
-  private config: BotConfig;
+  private config: BotDto;
 
-  constructor(config: BotConfig) {
-    this.client = new Telegraf(config.token);
+  constructor(config: BotDto) {
+    this.client = new Telegraf(config.token, {
+      telegram: {
+        apiRoot: config.apiRoot,
+      },
+    });
     this.config = config;
   }
 
@@ -28,7 +32,7 @@ export class TelegramBot {
     return this.instance;
   }
 
-  static create(config: BotConfig) {
+  static create(config: BotDto) {
     const { name } = config;
 
     if (!this.instance[name]) {
