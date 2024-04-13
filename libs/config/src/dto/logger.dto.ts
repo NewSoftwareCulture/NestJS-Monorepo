@@ -1,7 +1,7 @@
 import { Expose } from 'class-transformer';
-import { IsOptional, IsString } from 'class-validator';
+import { IsBoolean, IsOptional, IsString } from 'class-validator';
 
-export class LoggerConfig {
+export class LoggerDto {
   @Expose()
   @IsOptional()
   @IsString()
@@ -15,15 +15,20 @@ export class LoggerConfig {
   @Expose()
   @IsOptional()
   @IsString()
-  filename: string;
+  directory: string;
 
   @Expose()
   @IsOptional()
-  @IsString()
-  filenameWarn: string;
+  @IsBoolean()
+  file: boolean;
 
   @Expose()
   @IsOptional()
-  @IsString()
-  filenameError: string;
+  @IsBoolean()
+  file_warn: boolean;
+
+  @Expose()
+  @IsOptional()
+  @IsBoolean()
+  file_error: boolean;
 }

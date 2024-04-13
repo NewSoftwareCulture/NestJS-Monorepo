@@ -1,27 +1,11 @@
 import { Expose, Type } from 'class-transformer';
-import {
-  IsArray,
-  IsNumber,
-  IsOptional,
-  IsString,
-  ValidateNested,
-} from 'class-validator';
+import { IsArray, IsNumber, IsOptional, ValidateNested } from 'class-validator';
 
-import { BotConfig } from './bot.dto';
-import { LoggerConfig } from './logger.dto';
-import { FilesConfig } from './files.dto';
-
-class FormatsConfig {
-  @Expose()
-  @IsOptional()
-  @IsString()
-  video: string;
-
-  @Expose()
-  @IsOptional()
-  @IsString()
-  photo: string;
-}
+import { BotDto } from './bot.dto';
+import { LoggerDto } from './logger.dto';
+import { HealthcheckDto } from './healthcheck.dto';
+import { TransportDto } from './transport.dto';
+import { RedisDto } from './redis.dto';
 
 export class ConfigDto {
   @Expose()
@@ -34,18 +18,22 @@ export class ConfigDto {
   @IsOptional()
   @ValidateNested({ each: true })
   @IsArray()
-  @Type(() => BotConfig)
-  bot: BotConfig[];
+  @Type(() => BotDto)
+  bot: BotDto[];
 
   @Expose()
   @IsOptional()
-  logger: LoggerConfig;
+  healthcheck: HealthcheckDto;
 
   @Expose()
   @IsOptional()
-  files: FilesConfig;
+  transport: TransportDto;
 
   @Expose()
   @IsOptional()
-  formats: FormatsConfig;
+  redis: RedisDto;
+
+  @Expose()
+  @IsOptional()
+  logger: LoggerDto;
 }

@@ -1,19 +1,24 @@
 import { Expose } from 'class-transformer';
 import { IsOptional, IsString } from 'class-validator';
 
-export class FilesConfig {
+export class RedisDto {
   @Expose()
   @IsOptional()
   @IsString()
-  input: string;
+  host: string;
 
   @Expose()
   @IsOptional()
   @IsString()
-  output: string;
+  port: string;
 
   @Expose()
   @IsOptional()
   @IsString()
-  buffer: string;
+  username: string;
+
+  @Expose()
+  @IsOptional()
+  @IsString()
+  password: string;
 }

@@ -1,7 +1,7 @@
 import { Expose, Type } from 'class-transformer';
 import { IsArray, IsOptional, IsString } from 'class-validator';
 
-export class BotDto {
+export class HealthcheckHostDto {
   @Expose()
   @IsOptional()
   @IsString()
@@ -10,16 +10,17 @@ export class BotDto {
   @Expose()
   @IsOptional()
   @IsString()
-  token: string;
+  service: string;
 
   @Expose()
   @IsOptional()
   @IsString()
-  apiRoot: string;
-
+  url: string;
+}
+export class HealthcheckDto {
   @Expose()
   @IsOptional()
   @IsArray()
-  @Type(() => Number)
-  admin: number[];
+  @Type(() => HealthcheckHostDto)
+  hosts: HealthcheckHostDto[];
 }
