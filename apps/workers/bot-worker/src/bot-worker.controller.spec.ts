@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { BotController } from './bot-service.controller';
-import { BotService } from './bot-service.service';
+import { BotController } from './controllers/bot-worker-telegram.controller';
+import { BotService } from './services/bot-worker-telegram.service';
 
 describe('BotController', () => {
   let appController: BotController;

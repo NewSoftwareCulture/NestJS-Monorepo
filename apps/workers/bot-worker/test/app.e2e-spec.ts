@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { BotModule } from '../src/bot-service.module';
+import { BotModule } from '../src/bot-worker.module';
 
 describe('BotServiceController (e2e)', () => {
   let app: INestApplication;

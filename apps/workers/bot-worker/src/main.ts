@@ -1,11 +1,12 @@
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions } from '@nestjs/microservices';
 import { TelegramTransportStrategy } from '@libs/transport-telegram';
+import { RabbitMQTransportStrategy } from '@libs/transport-rabbitmq';
 import { LoggerService } from '@libs/logger';
 import { ConfigService } from '@libs/config';
 import { findByName } from '@libs/utils';
 
-import { BotModule } from './bot-service.module';
+import { BotModule } from './bot-worker.module';
 
 const whiteList = ['http://localhost:3000'];
 
@@ -29,6 +30,10 @@ async function bootstrap() {
     ),
   });
 
+  app.connectMicroservice<MicroserviceOptions>({
+    strategy: new RabbitMQTransportStrategy(configService),
+  });
+
   // Add Winston logger
   app.useLogger(logger);
 
@@ -38,5 +43,7 @@ async function bootstrap() {
   // Start telegram and web-server
   app.startAllMicroservices();
   await app.listen(port);
+
+  logger.info(`🔥 Server run on port: ${port}`);
 }
 bootstrap();
