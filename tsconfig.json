@@ -24,12 +24,6 @@
       "@libs/config/*": [
         "libs/config/src/*"
       ],
-      "@libs/rabbitmq": [
-        "libs/rabbitmq/src"
-      ],
-      "@libs/rabbitmq/*": [
-        "libs/rabbitmq/src/*"
-      ],
       "@libs/utils": [
         "libs/utils"
       ],
@@ -48,11 +42,29 @@
       "@libs/guards/*": [
         "libs/guards/*"
       ],
+      "@libs/redis": [
+        "libs/redis/src"
+      ],
+      "@libs/redis/*": [
+        "libs/redis/src/*"
+      ],
       "@libs/transport-telegram": [
         "libs/transport-telegram/src"
       ],
       "@libs/transport-telegram/*": [
         "libs/transport-telegram/src/*"
+      ],
+      "@libs/transport-rabbitmq": [
+        "libs/transport-rabbitmq/src"
+      ],
+      "@libs/transport-rabbitmq/*": [
+        "libs/transport-rabbitmq/src/*"
+      ],
+      "@libs/transport-kafka": [
+        "libs/transport-kafka/src"
+      ],
+      "@libs/transport-kafka/*": [
+        "libs/transport-kafka/src/*"
       ],
       "@libs/healthcheck": [
         "libs/healthcheck/"

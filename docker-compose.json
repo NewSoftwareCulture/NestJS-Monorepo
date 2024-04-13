@@ -1,0 +1,28 @@
+{
+  "telegram-saga": {
+    "service": "telegram-saga",
+    "rabbitQueue": "telegram_saga_queue",
+    "scale": 1,
+    "limits": {
+      "cpus": "0.5",
+      "memory": "2G"
+    }
+  },
+  "bot-worker": {
+    "service": "bot-worker",
+    "rabbitQueue": "bot_worker_queue",
+    "scale": 1,
+    "limits": {
+      "cpus": "0.5",
+      "memory": "2G"
+    }
+  },
+  "healthcheck": {
+    "service": "healthcheck",
+    "scale": 1,
+    "limits": {
+      "cpus": "0.5",
+      "memory": "2G"
+    }
+  }
+}

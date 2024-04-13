@@ -6,28 +6,24 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "build:bot-service": "nest build bot-service",
-    "build:file-service": "nest build file-service",
-    "build:model-service": "nest build model-service",
-    "build:healthcheck-service": "nest build healthcheck-service",
-    "build": "npm run build:bot-service && npm run build:file-service && npm run build:model-service && npm run build:healthcheck-service",
+    "start:ci-cd": "./ci-cd-agent/set-agent.sh",
+    "build:docker": "docker build --tag nestjs_monorepo_image . && node ./scripts/generate-docker-compose.js",
+    "build:bot-worker": "nest build bot-worker",
+    "build:healthcheck": "nest build healthcheck",
+    "build": "npm run build:bot-worker && npm run build:healthcheck",
     "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
     "start": "nest start",
-    "start:debug": "nest start bot-service --debug --watch",
-    "dev:bot-service": "nest start bot-service --debug --watch",
-    "dev:file-service": "nest start file-service --debug --watch",
-    "dev:model-service": "nest start model-service --debug --watch",
-    "dev:healthcheck-service": "nest start healthcheck-service --debug --watch",
-    "start:bot-service": "node dist/apps/bot-service/main",
-    "start:file-service": "node dist/apps/file-service/main",
-    "start:model-service": "node dist/apps/model-service/main",
-    "start:healthcheck-service": "node dist/apps/healthcheck-service/main",
+    "start:debug": "nest start bot-worker --debug --watch",
+    "dev:bot-worker": "nest start bot-worker --debug --watch",
+    "dev:healthcheck": "nest start healthcheck --debug --watch",
+    "start:bot-worker": "node dist/apps/workers/bot-worker/main",
+    "start:healthcheck": "node dist/apps/healthcheck/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./apps/bot-service/test/jest-e2e.json"
+    "test:e2e": "jest --config ./apps/workers/bot-worker/test/jest-e2e.json"
   },
   "dependencies": {
     "@nestjs/axios": "^3.0.1",
@@ -37,12 +33,16 @@
     "@nestjs/microservices": "^10.3.0",
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/schedule": "^4.0.0",
+    "amqp-connection-manager": "^4.1.14",
+    "amqplib": "^0.10.4",
     "axios": "^1.6.5",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
+    "kafkajs": "^2.2.4",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1",
     "telegraf": "^4.15.3",
+    "uuid": "^9.0.1",
     "winston": "^3.11.0"
   },
   "devDependencies": {
@@ -95,9 +95,12 @@
       "^@libs/utils(|/.*)$": "<rootDir>/libs/utils/$1",
       "^@libs/logger(|/.*)$": "<rootDir>/libs/logger/src/$1",
       "^@libs/guards(|/.*)$": "<rootDir>/libs/guards/$1",
-      "^@libs/transport-telegram(|/.*)$": "<rootDir>/libs/transport-telegram/src/$1",
       "^@libs/healthcheck(|/.*)$": "<rootDir>/libs/healthcheck/$1",
-      "^@libs/middleware(|/.*)$": "<rootDir>/libs/middleware/$1"
+      "^@libs/middleware(|/.*)$": "<rootDir>/libs/middleware/$1",
+      "^@libs/redis(|/.*)$": "<rootDir>/libs/middleware/src/$1",
+      "^@libs/transport-telegram(|/.*)$": "<rootDir>/libs/transport-telegram/src/$1",
+      "^@libs/transport-rabbitmq(|/.*)$": "<rootDir>/libs/transport-rabbitmq/src/$1",
+      "^@libs/transport-kafka(|/.*)$": "<rootDir>/libs/transport-kafka/src/$1"
     }
   }
 }

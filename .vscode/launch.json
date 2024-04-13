@@ -5,30 +5,23 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Launch bot-service",
+      "name": "Launch bot-worker",
       "request": "launch",
       "runtimeArgs": [
         "run",
-        "dev:bot-service"
+        "dev:bot-worker"
       ],
+      "env": {
+        "SERVICE_NAME": "bot-worker",
+        "RABBITMQ_QUEUE": "bot_worker_queue",
+        "RABBITMQ_PREFETCH": "1",
+      },
       "runtimeExecutable": "npm",
       "skipFiles": [
         "<node_internals>/**"
       ],
-      "type": "node"
-    },
-    {
-      "name": "Launch file-service",
-      "request": "launch",
-      "runtimeArgs": [
-        "run",
-        "dev:file-service"
-      ],
-      "runtimeExecutable": "npm",
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
-      "type": "node"
-    },
+      "type": "node",
+      "console": "integratedTerminal",
+    }
   ]
 }
