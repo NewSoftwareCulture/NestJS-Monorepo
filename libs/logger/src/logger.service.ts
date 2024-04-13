@@ -5,6 +5,11 @@ import { ConfigService } from '@libs/config';
 
 import { createLogger } from './logger';
 
+const prepareMessage = (message) =>
+  typeof message === 'string'
+    ? message
+    : JSON.stringify(message, Object.getOwnPropertyNames(message));
+
 @Injectable()
 export class LoggerService implements NestLoggerService {
   private logger: Logger;
@@ -15,30 +20,30 @@ export class LoggerService implements NestLoggerService {
   }
 
   log(message: any, ...optionalParams: any[]) {
-    return this.logger.info(message, ...optionalParams);
+    return this.logger.info(prepareMessage(message), ...optionalParams);
   }
 
   info(message: any, ...optionalParams: any[]) {
-    return this.logger.info(message, ...optionalParams);
+    return this.logger.info(prepareMessage(message), ...optionalParams);
   }
 
   error(message: any, ...optionalParams: any[]) {
-    return this.logger.error(message, ...optionalParams);
+    return this.logger.error(prepareMessage(message), ...optionalParams);
   }
 
   warn(message: any, ...optionalParams: any[]) {
-    return this.logger.warn(message, ...optionalParams);
+    return this.logger.warn(prepareMessage(message), ...optionalParams);
   }
 
   debug(message: any, ...optionalParams: any[]) {
-    return this.logger.debug(message, ...optionalParams);
+    return this.logger.debug(prepareMessage(message), ...optionalParams);
   }
 
   verbose(message: any, ...optionalParams: any[]) {
-    return this.logger.verbose(message, ...optionalParams);
+    return this.logger.verbose(prepareMessage(message), ...optionalParams);
   }
 
   silly(message: any, ...optionalParams: any[]) {
-    return this.logger.silly(message, ...optionalParams);
+    return this.logger.silly(prepareMessage(message), ...optionalParams);
   }
 }

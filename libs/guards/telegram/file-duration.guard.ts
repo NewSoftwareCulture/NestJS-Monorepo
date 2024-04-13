@@ -7,12 +7,12 @@ import {
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
 
-import { LoggerService, LOGGER_SERVICE_DI } from '@libs/logger';
+import { LoggerService, LOGGER_SERVICE } from '@libs/logger';
 
 @Injectable()
 export class TelegramFileDurationGuard implements CanActivate {
   constructor(
-    @Inject(LOGGER_SERVICE_DI) private readonly logger: LoggerService,
+    @Inject(LOGGER_SERVICE) private readonly logger: LoggerService,
     private reflector: Reflector,
   ) {}
 
