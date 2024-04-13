@@ -14,7 +14,7 @@ export class TelegramAdminGuard implements CanActivate {
     const id = ctx?.update?.message?.from?.id || 0;
     const ids = this.reflector.get('admins', context.getHandler());
 
-    if (!ids.includes(id)) return false;
+    if (ids?.length && !ids.includes(id)) return false;
     return true;
   }
 }
