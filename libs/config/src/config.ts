@@ -5,7 +5,7 @@ import { readFileSync } from 'fs';
 import { fileExistsSync } from '@libs/utils';
 
 import { ConfigDto } from './dto/config.dto';
-import { CONFIG_FILE_PATH_LOCAL, CONFIG_FILE_PATH_GLOBAL } from './constants';
+import { CONFIG_FILE_PATH } from './constants';
 import { validateConfig } from './helpers/validateConfig';
 
 export const getFileConfig = () => {
@@ -13,13 +13,13 @@ export const getFileConfig = () => {
 
   const localFile = resolve(
     __dirname,
-    CONFIG_FILE_PATH_LOCAL[process.env.NODE_ENV] ||
-      CONFIG_FILE_PATH_LOCAL.default,
+    CONFIG_FILE_PATH[process.env.NODE_ENV] ||
+      CONFIG_FILE_PATH.default,
   );
   const globalFile = resolve(
-    __dirname,
-    CONFIG_FILE_PATH_GLOBAL[process.env.NODE_ENV] ||
-      CONFIG_FILE_PATH_GLOBAL.default,
+    process.cwd(),
+    CONFIG_FILE_PATH[process.env.NODE_ENV] ||
+      CONFIG_FILE_PATH.default,
   );
 
   if (fileExistsSync(localFile)) configPath = localFile;

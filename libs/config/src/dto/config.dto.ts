@@ -1,5 +1,11 @@
 import { Expose, Type } from 'class-transformer';
-import { IsArray, IsNumber, IsOptional, ValidateNested } from 'class-validator';
+import {
+  IsArray,
+  IsNumber,
+  IsString,
+  IsOptional,
+  ValidateNested,
+} from 'class-validator';
 
 import { BotDto } from './bot.dto';
 import { LoggerDto } from './logger.dto';
@@ -24,6 +30,11 @@ export class ConfigDto {
   @Expose()
   @IsOptional()
   healthcheck: HealthcheckDto;
+
+  @Expose()
+  @IsOptional()
+  @IsString()
+  prefix: string;
 
   @Expose()
   @IsOptional()
